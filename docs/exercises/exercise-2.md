@@ -1,6 +1,6 @@
 ## Exercise 2: convert the codebase to Kotlin
 
-In this exercise we will converting a very big clasds, the OrderItem class, to Kotlin. Our goal is to make it more concise.
+In this exercise we will convert the OrderItem class to Kotlin, our goal is to make it a bit more concise.
 
 Open OrderItem.java and convert the file using IntelliJ (menu > Code > Convert Java File to Kotlin File). The outcome of the conversion is far from optimal, we can do way better. Remember data classes? Let get rid of the boiler-plate and convert the OrderItem class to a data class. Add the data keyword to the class so that it becomes:
 
