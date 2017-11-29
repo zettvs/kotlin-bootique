@@ -62,14 +62,14 @@ data class OrderItem @JsonCreator constructor(@JsonProperty("productId") val pro
 
 ### Polishing the code
 
-The JSON (de)serialization in this application is handled using the Jackson library. In the spring-boot-starter-web dependency, which is defined in the maven pom.xml, the Jackson kotlin module is also being pulled in. Now we are using the jackson kotlin module we can cleanup the Jackson annotations a bit. Because Jackson can get more detail from the kotlin KClasses to discover the parameter names. The polished version of our data class would look like this:
+The JSON (de)serialization in this application is handled using the Jackson library. In the spring-boot-starter-web dependency, which is defined in the maven pom.xml, the Jackson kotlin module is also being pulled in. By using the Jackson kotlin module we can cleanup the Jackson annotations a bit. The polished version of our data class would look like this:
 
 ```kotlin
 data class OrderItem(val productId: String, val quantity: Int, val price: BigDecimal = BigDecimal.ZERO) {
     val totalPrice: BigDecimal = price.multiply(BigDecimal(quantity))
 }
 ```
-We can also drop the constructor keyword since there is only one constructor here and! we because do not need any annotations on the constructor anymore.
+We can also drop the constructor keyword since there is only one constructor here _**and**_ because do not have any annotation on the constructor left.
 
 There is one optimization left, we can improve the readability of the totalPrice calculation. Would it not be nice to being able to write it like:
 
