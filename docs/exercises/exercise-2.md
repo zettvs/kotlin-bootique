@@ -1,6 +1,12 @@
 ## Exercise 2: convert more code to Kotlin
 
-In this exercise we will convert the OrderItem class to Kotlin, our goal is to make it a bit more concise.
+In this exercise we will convert the Product and OrderItem classes to Kotlin, our goal is to make it a bit more concise.
+
+### Convert Product.java to Kotlin
+
+Open Product.java and convert the file using IntelliJ (menu > Code > Convert Java File to Kotlin File). Wow, that was easy :-) 
+
+### Convert OrderItem.java to Kotlin
 
 Open OrderItem.java and convert the file using IntelliJ (menu > Code > Convert Java File to Kotlin File). The outcome of the conversion is far from optimal, we can do way better. Remember data classes? Let get rid of the boiler-plate and convert the OrderItem class to a data class. Add the data keyword to the class so that it becomes:
 
@@ -83,13 +89,9 @@ Since Kotlin 1.2 the Kotlin stdlib includes an overloaded times operator for Big
 public operator inline fun java.math.BigDecimal.times(other: java.math.BigDecimal): java.math.BigDecimal
 ```
 
-### Convert Product.java to Kotlin
-
-Open Product.java and convert the file using IntelliJ (menu > Code > Convert Java File to Kotlin File). Wow, that was easy :-) 
-
-You could consider converting it to a data class so we get the equals, hashCode and toString for free.
-
 ### Done?
+
+You could consider converting the Product class to a data class so we get the equals, hashCode and toString for free.
 
 Continue with exercise-3:
 
