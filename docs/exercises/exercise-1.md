@@ -6,7 +6,7 @@ This project uses maven for building the application but when using gradle the s
 
 ### Add Kotlin to your maven project
 
-Let prepare your maven pom.xml for Kotlin. Add a maven property that defines the Kotlin version to the existing properties:
+Lets prepare the maven pom.xml for Kotlin. Add a maven property that defines the Kotlin version to the existing properties:
 ```xml
 <properties>
     ...
@@ -61,7 +61,9 @@ Just like Java, you need to configure a compiler plugin for the compilation of K
     </dependencies>
 </plugin>
 ```
-Your project is ready to start writing kotlin! Now rebuild the project using maven by executing the following command:
+Your project is now ready for some kotlin code! 
+
+Rebuild the project using maven by executing the following command:
 
 ```xml
 ./mvnw clean verify
@@ -71,14 +73,16 @@ Now convert the BootiqueApplication.java file to Kotlin. You can do this in Inte
 
 Build the project with maven (./mvnw clean verify).
 
-You should see the following error:
+You should see an error in the tests. The BootiqueApplicationTests try to bootstrap the Spring Boot application but fails with the following error:
 ```
 org.springframework.beans.factory.parsing.BeanDefinitionParsingException: 
 Configuration problem: @Configuration class 'BootiqueApplication' may not be final. Remove the final modifier to continue.
 Offending resource: com.bootique.bootique.BootiqueApplication
 ```
 
-What happened? In Kotlin all the classes are final by default. So we need to explicitly make the class open, add the open keyword to the class definition.
+What happened? In Kotlin all the classes are final by default, this causes an issue when using Spring (Boot). Spring will try to subclass (Proxy) you configuration classes and components, so we need to explicitly mark the class open, so that it can be extended. 
+
+This can be done by adding the open keyword to the class definition.
 
 ```kotlin
 open class BootiqueApplication
@@ -92,7 +96,7 @@ Configuration problem: @Bean method 'api' must not be private or final; change t
 Offending resource: com.bootique.bootique.BootiqueApplication
 ```
 
-What happend? In Kotlin all the methods are also final by default. Since Spring wants to proxy the methods you need to declare them open as well.
+What happened? In Kotlin all the methods are also final by default. Since Spring wants to proxy the methods you need to declare them open as well.
 
 This might be fine in our case where there is just one method, but consider an application with multiple configuration classes and/or bean definitions.
 
