@@ -112,3 +112,9 @@ Add the following configuration to the kotlin-maven-plugin (just after <version>
 Build the project with maven (./mvnw clean verify), is it working? Should be fine now! 
 
 You can now also remove the open keyword from the BootiqueApplication class definition if it bothers you.
+
+Continue with exercise-2:
+
+```
+git checkout exercise-2
+```
