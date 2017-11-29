@@ -85,7 +85,9 @@ public operator inline fun java.math.BigDecimal.times(other: java.math.BigDecima
 
 ### Convert Product.java to Kotlin
 
-Open Product.java and convert the file using IntelliJ (menu > Code > Convert Java File to Kotlin File). Wow, that was easy :-)
+Open Product.java and convert the file using IntelliJ (menu > Code > Convert Java File to Kotlin File). Wow, that was easy :-) 
+
+You could consider converting it to a data class so we get the equals, hashCode and toString for free.
 
 ### Done?
 
