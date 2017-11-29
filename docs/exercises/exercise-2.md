@@ -1,4 +1,4 @@
-## Exercise 2: convert the codebase to Kotlin
+## Exercise 2: convert more code to Kotlin
 
 In this exercise we will convert the OrderItem class to Kotlin, our goal is to make it a bit more concise.
 
@@ -82,6 +82,12 @@ Since Kotlin 1.2 the Kotlin stdlib includes an overloaded times operator for Big
 ```kotlin
 public operator inline fun java.math.BigDecimal.times(other: java.math.BigDecimal): java.math.BigDecimal
 ```
+
+### Convert Product.java to Kotlin
+
+Open Product.java and convert the file using IntelliJ (menu > Code > Convert Java File to Kotlin File). Wow, that was easy :-)
+
+### Done?
 
 Continue with exercise-3:
 
