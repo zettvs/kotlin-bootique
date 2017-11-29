@@ -71,7 +71,7 @@ data class OrderItem(val productId: String, val quantity: Int, val price: BigDec
 ```
 We can also drop the constructor keyword since there is only one constructor here _**and**_ because do not have any annotation on the constructor left.
 
-There is one optimization left, we can improve the readability of the totalPrice calculation. Would it not be nice to being able to write it like:
+There is one optimization left, we can improve the readability of the totalPrice calculation. Would it not be nice being able to write it like:
 
 ```kotlin
 val totalPrice: BigDecimal = price * BigDecimal(quantity)
@@ -81,4 +81,10 @@ Since Kotlin 1.2 the Kotlin stdlib includes an overloaded times operator for Big
 
 ```kotlin
 public operator inline fun java.math.BigDecimal.times(other: java.math.BigDecimal): java.math.BigDecimal
+```
+
+Continue with exercise-3:
+
+```kotlin
+git checkout exercise-3
 ```
