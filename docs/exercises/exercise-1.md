@@ -8,7 +8,7 @@ This project uses maven for building the application, for gradle projects the sa
 
 Prepare the maven pom.xml for Kotlin.
  
-**Exercise**: add a maven property that defines the Kotlin version to the existing properties (see snippet below).
+**Exercise**: add a maven property that defines the Kotlin version to the existing properties.
 
 <details>
 <summary>Snippet</summary>
@@ -22,7 +22,7 @@ Prepare the maven pom.xml for Kotlin.
 </details>
 <br>
 
-**Exercise**: Add the Kotlin dependencies to the pom.xml (see snippet below) and use the Java 8+ version of the [kotlin stdlib](https://kotlinlang.org/api/latest/jvm/stdlib/index.html). 
+**Exercise**: Add Kotlin dependencies to the pom.xml and use the jre8 version of the [kotlin stdlib](https://kotlinlang.org/api/latest/jvm/stdlib/index.html). 
 
 <details>
 <summary>Snippet</summary>
