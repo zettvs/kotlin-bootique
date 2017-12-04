@@ -10,14 +10,21 @@ Prepare the maven pom.xml for Kotlin.
  
 **Exercise**: add a maven property that defines the Kotlin version to the existing properties (see snippet below).
 
+<details>
+<summary>Snippet</summary>
+
 ```xml
 <properties>
     ...
     <kotlin.version>1.2.0</kotlin.version>
 </properties>
 ```
+</details>
 
 **Exercise**: Add the Kotlin dependencies to the pom.xml (see snippet below), we will use the Java 8+ version of the [kotlin stdlib](https://kotlinlang.org/api/latest/jvm/stdlib/index.html). 
+
+<details>
+<summary>Snippet</summary>
 
 ```xml
 <dependency>
@@ -31,12 +38,16 @@ Prepare the maven pom.xml for Kotlin.
     <version>${kotlin.version}</version>
 </dependency>
 ```
+</details>
 
 ### Add the Kotlin maven plugin
 
 Just like with Java, you need to configure a [kotlin maven (compiler) plugin](https://kotlinlang.org/docs/reference/using-maven.html) for the compilation of Kotlin files. 
 
 **Exercise**: Add the kotlin-maven-plugin to the pom.xml (see snippet below).
+
+<details>
+<summary>Snippet</summary>
 
 ```xml
 <plugin>
@@ -68,6 +79,7 @@ Just like with Java, you need to configure a [kotlin maven (compiler) plugin](ht
     </dependencies>
 </plugin>
 ```
+</details>
 
 Your project is now ready for some kotlin code! Rebuild the project using maven by executing the following command:
 
@@ -94,7 +106,7 @@ What happened? In Kotlin all the classes are final by default, this causes an is
 **Exercise**: Add the open keyword to the BootiqueApplication class definition.
 
 <details>
-<summary>Snippet:</summary>
+<summary>Snippet</summary>
 
 ```kotlin
 open class BootiqueApplication
@@ -114,7 +126,10 @@ What happened? In Kotlin all the methods are also final by default. Since Spring
 
 While this might be fine in our case with just one method, consider an application with multiple configuration classes and/or bean definitions. We can use an plugin for the Kotlin maven plugin to ensure all Spring related classes and methods are made open by default.
 
-**Exercise**: Add the following configuration to the kotlin-maven-plugin, just after: _&lt;version&gt;${kotlin.version}&lt;/version&gt;_
+**Exercise**: Add the following configuration to the kotlin-maven-plugin, just after: `<version>${kotlin.version}</version>`
+
+<details>
+<summary>Snippet</summary>
 
 ```xml
 ...
@@ -128,6 +143,7 @@ While this might be fine in our case with just one method, consider an applicati
 <executions>
 ...
 ```
+</details>
 
 Build the project with maven (./mvnw clean verify), is it working now? 
 
