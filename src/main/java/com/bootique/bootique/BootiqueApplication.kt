@@ -9,10 +9,16 @@ import springfox.documentation.spi.DocumentationType
 import springfox.documentation.spring.web.plugins.Docket
 import springfox.documentation.swagger2.annotations.EnableSwagger2
 
+/**
+ * Spring boot application with Swagger2 enabled.
+ */
 @SpringBootApplication
 @EnableSwagger2
 class BootiqueApplication
 
+/**
+ * Runs the Spring boot application.
+ */
 fun main(args: Array<String>) {
     runApplication<BootiqueApplication>(*args) {
         beans {
