@@ -35,6 +35,8 @@ data class OrderItem @JsonCreator constructor(@JsonProperty("productId") val pro
 ```
 </details>
 
+In case you are wondering where the price value is being provided, then have a look at the BootiqueController.addToBasket().
+
 #### Verify the changes
 
 Build the project with maven (./mvnw clean verify), the build should succeed.
@@ -64,7 +66,7 @@ We broke the application :-( Remember we merged the two constructors? In the POS
 How can we fix this with Kotlin? First try to make the price field nullable and add the ? after the BigDecimal type. You will probable notice that the totalPrice calculation is now also giving you a hard time. Price can now be nullable therefore you need to add null checks in the totalPrice calculation.
 
 <details>
-  <summary>The resulting code should look like this:</summary>
+  <summary>An example with nullable price:</summary>
   
 ```kotlin
 data class OrderItem @JsonCreator constructor(@JsonProperty("productId") val productId: String, 
@@ -80,10 +82,8 @@ A better approach would be to avoid having to deal with null values, this way we
 
 - assign the default value to the price parameter, restart the application and try to run the same curl command as before.
 
-In case you are wondering where the price value is being provided, then have a look at the BootiqueController.addToBasket().
-
 <details>
-  <summary>The resulting code should look like this:</summary>
+  <summary>An examlple with a default value for price:</summary>
   
 ```kotlin
 data class OrderItem @JsonCreator constructor(@JsonProperty("productId") val productId: String, 
@@ -95,7 +95,7 @@ data class OrderItem @JsonCreator constructor(@JsonProperty("productId") val pro
 ```
 </details>
 
-In the code snippet above the constructor arguments are val, immutable, which means after assigning a value it cannot change anymore. Therefore we can also write the totalPrice assignment as an expression. Would it not be nice being able to write it like:
+In the code snippet above the constructor arguments are val, immutable, which means after assignment the value cannot be changed. Therefore we can also write the totalPrice assignment as an expression. Would it not be nice if we could write it like:
 
 ```kotlin
 val totalPrice: BigDecimal = price * quantity
