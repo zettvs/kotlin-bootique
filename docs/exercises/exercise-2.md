@@ -14,9 +14,13 @@ Open OrderItem.java and convert the file using IntelliJ (menu > Code > Convert J
 data class OrderItem
 ```
 
-Since now it is a data class we can delete the equals, hashCode and toString methods, we get that for free with data classes. 
+With data classes we get the equals, hashCode and toString method for free:
+ 
+- delete the equals, hashCode and toString methods.
 
-Data classes can have only 1 primary constructor, merge the two constructors. 
+Data classes can have only 1 primary constructor:
+ 
+- merge the two constructors into a single primary constructor.
 
 <details>
   <summary>The resulting code should look like this:</summary>
@@ -29,9 +33,9 @@ data class OrderItem @JsonCreator constructor(@JsonProperty("productId") val pro
         get() = price.multiply(BigDecimal(quantity))
 }
 ```
-
 </details>
 
+#### Verify the changes
 
 Build the project with maven (./mvnw clean verify), the build should succeed.
 
@@ -55,12 +59,13 @@ for JSON property price due to missing (therefore NULL) value for creator parame
 at [Source: (PushbackInputStream); line: 1, column: 30] (through reference chain: com.bootique.bootique.OrderItem["price"])
 ```
 
-We broke the application :-( Remember we merged the two constructors? In the curl POST request we send only two fields for an OrderItem: productId and quantity, this used to work before we did the refactoring. But after the changes we have a constructor which requires 3 non-nullable (mandatory) properties. 
+We broke the application :-( Remember we merged the two constructors? In the POST body we send only two fields _{"productId":"1","quantity":2}_ for an OrderItem, this used to work when there were to constructors, after the changes we should have ended up with a constructor which requires 3 non-nullable (mandatory) parameters. 
 
-How can we fix this? First lets try to make the price field nullable (add ? after the type). You will probable notice that the totalPrice calculation is now also giving you a hard time. Because price can now be nullable, you need to add null checks in the totalPrice calculation.
+How can we fix this with Kotlin? First try to make the price field nullable and add the ? after the BigDecimal type. You will probable notice that the totalPrice calculation is now also giving you a hard time. Price can now be nullable therefore you need to add null checks in the totalPrice calculation.
 
-This code looks like:
-
+<details>
+  <summary>The resulting code should look like this:</summary>
+  
 ```kotlin
 data class OrderItem @JsonCreator constructor(@JsonProperty("productId") val productId: String, 
                                               @JsonProperty("quantity") val quantity: Int, 
@@ -69,11 +74,17 @@ data class OrderItem @JsonCreator constructor(@JsonProperty("productId") val pro
         get() = price?.multiply(BigDecimal(quantity))
 }
 ```
+</details>
 
-A better approach would be to avoid having to deal with null values. This way we do not have to worry about potential NPEs. We can do this by providing a default value for the price, BigDecimal.ZERO was used in the Java version, we will use that here as well. 
+A better approach would be to avoid having to deal with null values, this way we do not have to worry about potential NPEs. We can do this by providing a default value for the price, in the Java version price was assigned the value of BigDecimal.ZERO, use that here as well. 
 
-In case you are wondering where the price value is being provided then have a look at the BootiqueController.addToBasket().
+- assign the default value to the price parameter, restart the application and try to run the same curl command as before.
 
+In case you are wondering where the price value is being provided, then have a look at the BootiqueController.addToBasket().
+
+<details>
+  <summary>The resulting code should look like this:</summary>
+  
 ```kotlin
 data class OrderItem @JsonCreator constructor(@JsonProperty("productId") val productId: String, 
                                               @JsonProperty("quantity") val quantity: Int, 
@@ -82,8 +93,9 @@ data class OrderItem @JsonCreator constructor(@JsonProperty("productId") val pro
         get() = price.multiply(BigDecimal(quantity)) // evaluated every time we access the totalPrice property or call getTotalPrice() from Java.
 }
 ```
+</details>
 
-Since we made the constructor arguments val, so immutable, we can also write totalPrice as an expression. Would it not be nice being able to write it like:
+In the code snippet above the constructor arguments are val, immutable, which means after assigning a value it cannot change anymore. Therefore we can also write the totalPrice assignment as an expression. Would it not be nice being able to write it like:
 
 ```kotlin
 val totalPrice: BigDecimal = price * quantity
@@ -95,7 +107,9 @@ This can be achieved by using [operator overloading](https://kotlinlang.org/docs
 val totalPrice: BigDecimal = price * BigDecimal(quantity)
 ```
 
-This is not yet how we want to write the expression because we still need to wrap the quantity in a BigDecimal Object in order to use the operator. Lets look at the signature for times operator on java.math.BigDecimal. 
+- change to totalPrice assignment to the snippet above.
+
+This is not yet how we want to write the expression because we still have to wrap the quantity in a BigDecimal in order to use the operator. Lets look at the signature for times operator on java.math.BigDecimal. 
 
 ```kotlin
 public operator inline fun java.math.BigDecimal.times(other: java.math.BigDecimal): java.math.BigDecimal
@@ -103,8 +117,15 @@ public operator inline fun java.math.BigDecimal.times(other: java.math.BigDecima
 
 As you probably know  _price.times(BigDecimal(quantity))_ is the same as _price * BigDecimal(quantity)_. We want to be able to invoke the times function with a Int argument so that we do not need to wrap it in a BigDecimal. Therefore we need to implement our own overloaded operator, simular to the one in the Koltin stdlib. 
 
-Just give it a try.
+- write an operator for java.math.BigDecimal that accepts an Int.
 
+<details>
+  <summary>The resulting code should look like this:</summary>
+  
+```kotlin
+public operator inline fun java.math.BigDecimal.times(other: Int): java.math.BigDecimal
+```
+</details>
 
 ### Polishing the code
 
@@ -118,7 +139,10 @@ As a bonus feature, the Jackson library also allows us to omit the @JsonCreator 
 
 We can also drop the constructor keyword since there is only one constructor here _**and**_ because do not need/have any annotation on the constructor left.
 
-The resulting polished data class looks like:
+- cleanup the code by removing the Jackson annotations
+
+<details>
+  <summary>The resulting polished data class looks like:</summary>
 
 ```kotlin
 data class OrderItem(val productId: String, val quantity: Int, val price: BigDecimal = BigDecimal.ZERO) {
@@ -127,6 +151,7 @@ data class OrderItem(val productId: String, val quantity: Int, val price: BigDec
 
 public operator inline fun java.math.BigDecimal.times(other: Int): java.math.BigDecimal
 ```
+</details>
 
 ### Done?
 
