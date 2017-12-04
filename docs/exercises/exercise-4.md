@@ -46,7 +46,7 @@ fun main(args: Array<String>) {
 
 We should now have a file with a Kotlin class with only two annotations defined on the class. And besides that it contains two functions, beans() and main().
 
-<section>
+<details>
 <summary>The resulting code should look like this:</summary>
 
 ```kotlin
@@ -79,14 +79,14 @@ fun main(args: Array<String>) {
     }
 }
 ```
-</section>
+</details>
 <br>
 
 We could even simplify the code even further by in-lining the beans() function inside runApplication.
 
 **Exercise**: move  `beans { ... }` inside of the `runApplication { ... }` block
 
-<section>
+<details>
 <summary>The resulting code should look like this:</summary>
 
 ```kotlin
@@ -114,7 +114,7 @@ fun main(args: Array<String>) {
     }
 }
 ```
-</section>
+</details>
 
 ### Next steps
 
