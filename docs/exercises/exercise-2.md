@@ -1,6 +1,6 @@
 ## Exercise 2: convert more code to Kotlin
 
-In this exercise we will convert the Product and OrderItem classes to Kotlin, our goal is to make it more concise.
+In this exercise we will convert the Product.java and OrderItem.java classes to Kotlin, our goal is to make it more concise.
 
 ### Convert Product.java to Kotlin
 
