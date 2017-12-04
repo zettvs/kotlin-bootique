@@ -83,6 +83,7 @@ data class OrderItem @JsonCreator constructor(@JsonProperty("productId") val pro
 }
 ```
 </details>
+<br>
 
 A better approach would be to avoid having to deal with null values, this way we do not have to worry about potential NPEs. We can do this by providing a default value for the price, in the Java version price was assigned the value of BigDecimal.ZERO, use that here as well. 
 
@@ -100,6 +101,7 @@ data class OrderItem @JsonCreator constructor(@JsonProperty("productId") val pro
 }
 ```
 </details>
+<br>
 
 In the code snippet above the constructor arguments are val, immutable, which means after assignment the value cannot be changed. Therefore we can also write the totalPrice assignment as an expression. Would it not be nice if we could write it like:
 
