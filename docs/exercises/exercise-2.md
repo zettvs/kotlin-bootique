@@ -26,7 +26,7 @@ With data classes we get the equals, hashCode and toString method for free:
 
 Data classes can have only 1 primary constructor:
  
-**Exercise**: merge the two constructors into a single primary constructor.
+**Exercise**: merge the two constructors into a single (primary) constructor.
 
 <details>
   <summary>The resulting code should look like this:</summary>
@@ -67,7 +67,7 @@ for JSON property price due to missing (therefore NULL) value for creator parame
 at [Source: (PushbackInputStream); line: 1, column: 30] (through reference chain: com.bootique.bootique.OrderItem["price"])
 ```
 
-We broke the application :-( Remember we merged the two constructors? In the POST body we send only two fields `{"productId":"1","quantity":2}` for an OrderItem, this used to work when there were to constructors, after the changes we should have ended up with a constructor which requires 3 non-nullable (mandatory) parameters. 
+We broke the application :-( Remember we merged the two constructors? In the POST body we send only two fields `{"productId":"1","quantity":2}` for an OrderItem, this used to work when there were two constructors. After the merge we ended up with a single constructor which requires 3 non-nullable (mandatory) parameters. 
 
 How can we fix this with Kotlin? First try to make the price field nullable and add the ? after the BigDecimal type. You will probable notice that the totalPrice calculation is now also giving you a hard time. Price can now be nullable therefore you need to add null checks in the totalPrice calculation.
 
