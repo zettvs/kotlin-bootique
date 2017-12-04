@@ -95,7 +95,9 @@ This is not yet how we want to write the expression because we still need to wra
 public operator inline fun java.math.BigDecimal.times(other: java.math.BigDecimal): java.math.BigDecimal
 ```
 
-As you probably know  _price.times(BigDecimal(quantity))_ is the same as _price * BigDecimal(quantity)_. We want to be able to invoke the times function with a Int argument, therefore we need to implement our own overloaded operator. Give it a try.
+As you probably know  _price.times(BigDecimal(quantity))_ is the same as _price * BigDecimal(quantity)_. We want to be able to invoke the times function with a Int argument so that we do not need to wrap it in a BigDecimal. Therefore we need to implement our own overloaded operator, simular to the one in the Koltin stdlib. 
+
+Just give it a try.
 
 
 ### Polishing the code
