@@ -134,6 +134,8 @@ As you probably know  _price.times(BigDecimal(quantity))_ is the same as _price 
 public operator inline fun java.math.BigDecimal.times(other: Int): java.math.BigDecimal
 ```
 </details>
+<br>
+It is a good practise to group these type of (language) extensions in a file so can be easily recognized and reused in other parts of the code.
 
 ### Polishing the code
 
