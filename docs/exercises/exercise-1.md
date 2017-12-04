@@ -2,7 +2,7 @@
 
 In this exercise we will modify the setup of an existing Spring Boot Java project to be able to start using Kotlin. 
 
-This project uses maven for building the application but the same concepts apply when using Gradle.
+This project uses maven for building the application, for gradle projects the same concepts apply.
 
 ### Add Kotlin to your maven project
 
@@ -69,7 +69,7 @@ Your project is now ready for some kotlin code! Rebuild the project using maven 
 
 ### Convert Java to Kotlin
 
-Lets convert some Java code to Kotlin, we will start with the BootiqueApplication.java file. You can try to do this manually but it can easily be done using IntelliJ via the menu option Code > Convert Java File to Kotlin File.
+Lets convert some Java code to Kotlin, start with the BootiqueApplication.java file. You can try to do this manually but this can easily be done using IntelliJ via the menu option Code > Convert Java File to Kotlin File.
 
 Build the project with maven (./mvnw clean verify).
 
