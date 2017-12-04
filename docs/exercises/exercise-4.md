@@ -1,8 +1,8 @@
-## Exercise 4: Spring 5 Kotlin Bean DSL
+## Exercise 4: Spring 5 Kotlin bean definition DSL
 
 In this exercise we will show a real world example of using a DSL written in Kotlin. We will use the Spring 5 Kotlin bean defintion DSL to rewrite the BootiqueApplication.kt class to this DSL.
 
-### Kotlin Bean DSL
+### Configuring the beans
 
 Spring 5 provides a [Kotlin Beans definition DSL](https://docs.spring.io/spring/docs/current/spring-framework-reference/languages.html#kotlin-bean-definition-dsl) to define your application configuration in a functional way.
 
@@ -29,6 +29,8 @@ Configure the existing `@Bean fun api(): Docket` in the Kotlin bean definition D
 We don`t need the old @Bean function anymore.
 
 **Exercise**: remove the `@Bean fun api(): Docket` function.
+
+### Spring Boot 2 and the Kotlin bean definition DSL
 
 We need to configure the SpringApplication runner with the BeanDefinitionDsl. Spring Boot 2 has some Kotlin extensions to do just that:
 
