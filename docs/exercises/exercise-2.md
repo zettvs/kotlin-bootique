@@ -156,10 +156,8 @@ We can also drop the constructor keyword since there is only one constructor her
 
 ```kotlin
 data class OrderItem(val productId: String, val quantity: Int, val price: BigDecimal = BigDecimal.ZERO) {
-    val totalPrice = price * quantity // evaluated only once!
+    val totalPrice = price * quantity
 }
-
-public operator inline fun java.math.BigDecimal.times(other: Int): java.math.BigDecimal
 ```
 </details>
 
