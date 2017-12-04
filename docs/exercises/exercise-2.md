@@ -16,11 +16,11 @@ data class OrderItem
 
 With data classes we get the equals, hashCode and toString method for free:
  
-- delete the equals, hashCode and toString methods.
+**Exercise**: delete the equals, hashCode and toString methods.
 
 Data classes can have only 1 primary constructor:
  
-- merge the two constructors into a single primary constructor.
+**Exercise**: merge the two constructors into a single primary constructor.
 
 <details>
   <summary>The resulting code should look like this:</summary>
@@ -80,7 +80,7 @@ data class OrderItem @JsonCreator constructor(@JsonProperty("productId") val pro
 
 A better approach would be to avoid having to deal with null values, this way we do not have to worry about potential NPEs. We can do this by providing a default value for the price, in the Java version price was assigned the value of BigDecimal.ZERO, use that here as well. 
 
-- assign the default value to the price parameter, restart the application and try to run the same curl command as before.
+**Exercise**: assign the default value to the price parameter, restart the application and try to run the same curl command as before.
 
 <details>
   <summary>An examlple with a default value for price:</summary>
@@ -107,7 +107,7 @@ This can be achieved by using [operator overloading](https://kotlinlang.org/docs
 val totalPrice: BigDecimal = price * BigDecimal(quantity)
 ```
 
-- change to totalPrice assignment to the snippet above.
+**Exercise**: replace the totalPrice calculation with the assignment snippet above.
 
 This is not yet how we want to write the expression because we still have to wrap the quantity in a BigDecimal in order to use the operator. Lets look at the signature for times operator on java.math.BigDecimal. 
 
@@ -117,7 +117,7 @@ public operator inline fun java.math.BigDecimal.times(other: java.math.BigDecima
 
 As you probably know  _price.times(BigDecimal(quantity))_ is the same as _price * BigDecimal(quantity)_. We want to be able to invoke the times function with a Int argument so that we do not need to wrap it in a BigDecimal. Therefore we need to implement our own overloaded operator, simular to the one in the Koltin stdlib. 
 
-- write an operator for java.math.BigDecimal that accepts an Int.
+**Exercise**: write an operator for java.math.BigDecimal that accepts an Int.
 
 <details>
   <summary>The resulting code should look like this:</summary>
@@ -139,7 +139,7 @@ As a bonus feature, the Jackson library also allows us to omit the @JsonCreator 
 
 We can also drop the constructor keyword since there is only one constructor here _**and**_ because do not need/have any annotation on the constructor left.
 
-- cleanup the code by removing the Jackson annotations
+**Exercise**: cleanup the code by removing the Jackson annotations
 
 <details>
   <summary>The resulting polished data class looks like:</summary>
@@ -157,7 +157,7 @@ public operator inline fun java.math.BigDecimal.times(other: Int): java.math.Big
 
 You could consider converting the Product class to a data class so we get the equals, hashCode and toString for free.
 
-Continue with exercise-3:
+**Exercise**: Continue with exercise-3:
 
 ```kotlin
 git checkout exercise-3
