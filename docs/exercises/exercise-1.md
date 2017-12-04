@@ -22,7 +22,7 @@ Prepare the maven pom.xml for Kotlin.
 </details>
 <br>
 
-**Exercise**: Add Kotlin dependencies to the pom.xml and use the jre8 version of the [kotlin stdlib](https://kotlinlang.org/api/latest/jvm/stdlib/index.html). 
+**Exercise**: Add [Kotlin dependencies](https://kotlinlang.org/docs/reference/using-maven.html) to the pom.xml and use the jre8 version of the [kotlin stdlib](https://kotlinlang.org/api/latest/jvm/stdlib/index.html). 
 
 <details>
 <summary>Snippet</summary>
@@ -45,7 +45,7 @@ Prepare the maven pom.xml for Kotlin.
 
 Just like with Java, you need to configure a [kotlin maven (compiler) plugin](https://kotlinlang.org/docs/reference/using-maven.html) for the compilation of Kotlin files. 
 
-**Exercise**: Add the kotlin-maven-plugin to the pom.xml (see snippet below).
+**Exercise**: Add the kotlin-maven-plugin to the pom.xml.
 
 <details>
 <summary>Snippet</summary>
