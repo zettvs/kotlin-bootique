@@ -14,7 +14,7 @@ Prepare the maven pom.xml for Kotlin, add a maven property that defines the Kotl
 </properties>
 ```
 
-Add the necessary Kotlin dependencies, we will use the Java 8+ version of the [https://kotlinlang.org/api/latest/jvm/stdlib/index.html](kotlin stdlib).
+Add the necessary Kotlin dependencies, we will use the Java 8+ version of the [https://kotlinlang.org/api/latest/jvm/stdlib/index.html](kotlin stdlib) 
 ```xml
 <dependency>
     <groupId>org.jetbrains.kotlin</groupId>
