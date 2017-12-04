@@ -52,7 +52,7 @@ We broke the application :-( Remember we merged the two constructors? In the cur
 
 How can we fix this? First lets try to make the price field nullable (add ? after the type). You will probable notice that the totalPrice calculation is now also giving you a hard time. Because price can now be nullable, you need to add null checks in the totalPrice calculation.
 
-The code should now look like:
+This code looks like:
 
 ```kotlin
 data class OrderItem @JsonCreator constructor(@JsonProperty("productId") val productId: String, 
@@ -82,17 +82,20 @@ We can improve the readability of the totalPrice calculation. Would it not be ni
 val totalPrice: BigDecimal = price * quantity
 ```
 
-The Kotlin stdlib includes overloaded operators for Java types like BigDecimal. This allows use to write the above statement like:
+This can be achieved by using [operator overloading](https://kotlinlang.org/docs/reference/operator-overloading.html) in Kotlin. The Kotlin stdlib includes [overloaded operators](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/java.math.-big-decimal/index.html) for Java types like java.math.BigDecimal. This allows use to write the above statement like:
 
 ```kotlin
 val totalPrice: BigDecimal = price * BigDecimal(quantity)
 ```
 
-Write your own 
+This is not yet how we want to write the expression because we still need to wrap the quantity in a BigDecimal Object in order to use the operator. Lets look at the signature for times operator on java.math.BigDecimal. 
 
 ```kotlin
 public operator inline fun java.math.BigDecimal.times(other: java.math.BigDecimal): java.math.BigDecimal
 ```
+
+As you probably know  _price.times(BigDecimal(quantity))_ is the same as _price * BigDecimal(quantity)_. We want to be able to invoke the times function with a Int argument, therefore we need to implement our own overloaded operator. Give it a try.
+
 
 ### Polishing the code
 
