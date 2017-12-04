@@ -14,7 +14,7 @@ Open OrderItem.java and convert the file using IntelliJ (menu > Code > Convert J
 data class OrderItem
 ```
 
-Since it is a data class we can delete the equals, hashCode and toString methods, we get that for free with data classes. 
+Since now it is a data class we can delete the equals, hashCode and toString methods, we get that for free with data classes. 
 
 Data classes can have only 1 primary constructor. Lets merge the two constructors. The result should look like:
 
