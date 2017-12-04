@@ -72,7 +72,7 @@ We broke the application :-( Remember we merged the two constructors? In the POS
 How can we fix this with Kotlin? First try to make the price field nullable and add the ? after the BigDecimal type. You will probable notice that the totalPrice calculation is now also giving you a hard time. Price can now be nullable therefore you need to add null checks in the totalPrice calculation.
 
 <details>
-  <summary>An example with nullable price:</summary>
+  <summary>Example with nullable price:</summary>
   
 ```kotlin
 data class OrderItem @JsonCreator constructor(@JsonProperty("productId") val productId: String, 
@@ -90,7 +90,7 @@ A better approach would be to avoid having to deal with null values, this way we
 **Exercise**: assign the default value to the price parameter, restart the application and try to run the same curl command as before.
 
 <details>
-  <summary>An examlple with a default value for price:</summary>
+  <summary>Example with a default value for price:</summary>
   
 ```kotlin
 data class OrderItem @JsonCreator constructor(@JsonProperty("productId") val productId: String, 
