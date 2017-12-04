@@ -20,8 +20,9 @@ Prepare the maven pom.xml for Kotlin.
 </properties>
 ```
 </details>
+<br>
 
-**Exercise**: Add the Kotlin dependencies to the pom.xml (see snippet below), we will use the Java 8+ version of the [kotlin stdlib](https://kotlinlang.org/api/latest/jvm/stdlib/index.html). 
+**Exercise**: Add the Kotlin dependencies to the pom.xml (see snippet below) and use the Java 8+ version of the [kotlin stdlib](https://kotlinlang.org/api/latest/jvm/stdlib/index.html). 
 
 <details>
 <summary>Snippet</summary>
@@ -80,6 +81,7 @@ Just like with Java, you need to configure a [kotlin maven (compiler) plugin](ht
 </plugin>
 ```
 </details>
+<br>
 
 Your project is now ready for some kotlin code! Rebuild the project using maven by executing the following command:
 
@@ -144,6 +146,7 @@ While this might be fine in our case with just one method, consider an applicati
 ...
 ```
 </details>
+<br>
 
 Build the project with maven (./mvnw clean verify), is it working now? 
 
