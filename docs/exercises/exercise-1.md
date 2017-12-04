@@ -6,7 +6,10 @@ This project uses maven for building the application, for gradle projects the sa
 
 ### Add Kotlin to your maven project
 
-Prepare the maven pom.xml for Kotlin, add a maven property that defines the Kotlin version to the existing properties:
+Prepare the maven pom.xml for Kotlin.
+ 
+**Exercise**: add a maven property that defines the Kotlin version to the existing properties (see snippet below).
+
 ```xml
 <properties>
     ...
@@ -14,7 +17,8 @@ Prepare the maven pom.xml for Kotlin, add a maven property that defines the Kotl
 </properties>
 ```
 
-Add the necessary Kotlin dependencies, we will use the Java 8+ version of the [kotlin stdlib](https://kotlinlang.org/api/latest/jvm/stdlib/index.html). 
+**Exercise**: Add the Kotlin dependencies to the pom.xml (see snippet below), we will use the Java 8+ version of the [kotlin stdlib](https://kotlinlang.org/api/latest/jvm/stdlib/index.html). 
+
 ```xml
 <dependency>
     <groupId>org.jetbrains.kotlin</groupId>
@@ -31,6 +35,9 @@ Add the necessary Kotlin dependencies, we will use the Java 8+ version of the [k
 ### Add the Kotlin maven plugin
 
 Just like with Java, you need to configure a [kotlin maven (compiler) plugin](https://kotlinlang.org/docs/reference/using-maven.html) for the compilation of Kotlin files. 
+
+**Exercise**: Add the kotlin-maven-plugin to the pom.xml (see snippet below).
+
 ```xml
 <plugin>
     <artifactId>kotlin-maven-plugin</artifactId>
@@ -61,6 +68,7 @@ Just like with Java, you need to configure a [kotlin maven (compiler) plugin](ht
     </dependencies>
 </plugin>
 ```
+
 Your project is now ready for some kotlin code! Rebuild the project using maven by executing the following command:
 
 ```xml
@@ -83,12 +91,16 @@ Offending resource: com.bootique.bootique.BootiqueApplication
 
 What happened? In Kotlin all the classes are final by default, this causes an issue when using Spring (Boot). Spring needs to be able to subclass (Proxy) you configuration classes and components. In kotlin we can mark a class open so it can be inherited by other classes. 
 
-Add the open keyword to the class definition.
+**Exercise**: Add the open keyword to the BootiqueApplication class definition.
+
+<details>
+<summary>Snippet:</summary>
 
 ```kotlin
 open class BootiqueApplication
 ```
-
+</details>
+<br>
 Build the project with maven (./mvnw clean verify), is it working?
 
 ```
@@ -102,7 +114,7 @@ What happened? In Kotlin all the methods are also final by default. Since Spring
 
 While this might be fine in our case with just one method, consider an application with multiple configuration classes and/or bean definitions. We can use an plugin for the Kotlin maven plugin to ensure all Spring related classes and methods are made open by default.
 
-Add the following configuration to the kotlin-maven-plugin, just after: _&lt;version&gt;${kotlin.version}&lt;/version&gt;_
+**Exercise**: Add the following configuration to the kotlin-maven-plugin, just after: _&lt;version&gt;${kotlin.version}&lt;/version&gt;_
 
 ```xml
 ...
@@ -119,7 +131,7 @@ Add the following configuration to the kotlin-maven-plugin, just after: _&lt;ver
 
 Build the project with maven (./mvnw clean verify), is it working now? 
 
-You can now also remove the _open_ keyword from the BootiqueApplication class definition if it really bothers you.
+**Exercise**: You can now also remove the _open_ keyword from the BootiqueApplication class definition if it really bothers you.
 
 ### Next steps
 
