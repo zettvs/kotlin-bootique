@@ -1,7 +1,7 @@
 ### Next steps
 
-Continue with exercise-2:
+Continue with exercise-3:
 
 ```
-git checkout exercise-2
+git checkout exercise-3
 ```
