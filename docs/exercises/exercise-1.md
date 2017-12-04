@@ -104,15 +104,19 @@ This might be fine in our case where there is just one method, but consider an a
 
 We can use a kotlin compiler plugin for spring application to ensure all Spring related classes and methods are defined open by default.
 
-Add the following configuration to the kotlin-maven-plugin (just after &lt;version&gt;${kotlin.version}&lt;/version&gt;):
+Add the following configuration to the kotlin-maven-plugin, just after: _&lt;version&gt;${kotlin.version}&lt;/version&gt;_
 
 ```xml
+...
+<version>${kotlin.version}</version>
 <configuration>
     <compilerPlugins>
         <plugin>spring</plugin>
     </compilerPlugins>
     <jvmTarget>1.8</jvmTarget>
 </configuration>
+<executions>
+...
 ```
 
 Build the project with maven (./mvnw clean verify), is it working? Should be fine now! 
