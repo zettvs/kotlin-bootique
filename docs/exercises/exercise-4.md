@@ -42,7 +42,7 @@ fun main(args: Array<String>) {
 }
 ```
 
-**Exercise**: Replace the existing main, including companion object.
+**Exercise**: Replace the existing main (including companion object) by this example.
 
 We should now have a file with a Kotlin class with only two annotations defined on the class. And besides that it contains two functions, beans() and main().
 
