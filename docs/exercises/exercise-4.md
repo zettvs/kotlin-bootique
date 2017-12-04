@@ -1,7 +1,7 @@
-## Exercise 4: Spring Kotlin Bean DSL
+### Next steps
 
-Rewrite the BootiqueApplication to use the Spring Kotlin Bean DSL.
+Continue with exercise-5:
 
-### Kotlin Bean DSL
-
-**Exercise**: 
+```
+git checkout exercise-5
+```
