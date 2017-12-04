@@ -16,8 +16,10 @@ data class OrderItem
 
 Since now it is a data class we can delete the equals, hashCode and toString methods, we get that for free with data classes. 
 
-Data classes can have only 1 primary constructor. Lets merge the two constructors. The result should look like:
+Data classes can have only 1 primary constructor, merge the two constructors. 
 
+<details>
+  <summary>The resulting code should look like this:</summary>
 ```kotlin
 data class OrderItem @JsonCreator constructor(@JsonProperty("productId") val productId: String, 
                                               @JsonProperty("quantity") val quantity: Int, 
@@ -26,6 +28,8 @@ data class OrderItem @JsonCreator constructor(@JsonProperty("productId") val pro
         get() = price.multiply(BigDecimal(quantity))
 }
 ```
+</details>
+
 
 Build the project with maven (./mvnw clean verify), the build should succeed.
 
