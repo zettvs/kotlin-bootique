@@ -4,11 +4,19 @@ In this exercise we will convert the Product.java and OrderItem.java classes to 
 
 ### Convert Product.java to Kotlin
 
-Open Product.java and convert the file using IntelliJ (menu > Code > Convert Java File to Kotlin File). Wow, that was easy :-) 
+Open Product.java.
+
+**Exercise**: convert Product.java to Kotlin using IntelliJ (menu > Code > Convert Java File to Kotlin File). 
+
+Wow, that was easy :-) 
 
 ### Convert OrderItem.java to Kotlin
 
-Open OrderItem.java and convert the file using IntelliJ (menu > Code > Convert Java File to Kotlin File). The outcome of the conversion is far from optimal, we can do way better. Remember Kotlin [data classes](https://kotlinlang.org/docs/reference/data-classes.html)? Let get rid of the boiler-plate and convert the OrderItem class to a data class. Add the data keyword to the class so that it becomes:
+Open OrderItem.java. 
+
+**Exercise**: convert OrderItem.java to Kotlin using IntelliJ (menu > Code > Convert Java File to Kotlin File). 
+
+The outcome of the conversion is far from optimal, we can do way better! Remember Kotlin [data classes](https://kotlinlang.org/docs/reference/data-classes.html)? Let get rid of the boiler-plate and convert the OrderItem class to a data class. Add the data keyword to the class so that it becomes:
 
 ```kotlin
 data class OrderItem
@@ -107,7 +115,7 @@ This can be achieved by using [operator overloading](https://kotlinlang.org/docs
 val totalPrice: BigDecimal = price * BigDecimal(quantity)
 ```
 
-**Exercise**: replace the totalPrice calculation with the assignment snippet above.
+**Exercise**: replace the totalPrice calculation with the snippet above.
 
 This is not yet how we want to write the expression because we still have to wrap the quantity in a BigDecimal in order to use the operator. Lets look at the signature for times operator on java.math.BigDecimal. 
 
@@ -152,6 +160,10 @@ data class OrderItem(val productId: String, val quantity: Int, val price: BigDec
 public operator inline fun java.math.BigDecimal.times(other: Int): java.math.BigDecimal
 ```
 </details>
+
+<br>
+
+**Exercise**: Build and restart the application and see if it still works!
 
 ### Done?
 
