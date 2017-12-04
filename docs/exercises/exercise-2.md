@@ -67,7 +67,7 @@ for JSON property price due to missing (therefore NULL) value for creator parame
 at [Source: (PushbackInputStream); line: 1, column: 30] (through reference chain: com.bootique.bootique.OrderItem["price"])
 ```
 
-We broke the application :-( Remember we merged the two constructors? In the POST body we send only two fields _{"productId":"1","quantity":2}_ for an OrderItem, this used to work when there were to constructors, after the changes we should have ended up with a constructor which requires 3 non-nullable (mandatory) parameters. 
+We broke the application :-( Remember we merged the two constructors? In the POST body we send only two fields `{"productId":"1","quantity":2}` for an OrderItem, this used to work when there were to constructors, after the changes we should have ended up with a constructor which requires 3 non-nullable (mandatory) parameters. 
 
 How can we fix this with Kotlin? First try to make the price field nullable and add the ? after the BigDecimal type. You will probable notice that the totalPrice calculation is now also giving you a hard time. Price can now be nullable therefore you need to add null checks in the totalPrice calculation.
 
@@ -123,7 +123,7 @@ This is not yet how we want to write the expression because we still have to wra
 public operator inline fun java.math.BigDecimal.times(other: java.math.BigDecimal): java.math.BigDecimal
 ```
 
-As you probably know  _price.times(BigDecimal(quantity))_ is the same as _price * BigDecimal(quantity)_. We want to be able to invoke the times function with a Int argument so that we do not need to wrap it in a BigDecimal. Therefore we need to implement our own overloaded operator, simular to the one in the Koltin stdlib. 
+As you probably know  `price.times(BigDecimal(quantity))` is the same as `price * BigDecimal(quantity)`. We want to be able to invoke the times function with a Int argument so that we do not need to wrap it in a BigDecimal. Therefore we need to implement our own overloaded operator, simular to the one in the Koltin stdlib. 
 
 **Exercise**: write an operator for java.math.BigDecimal that accepts an Int.
 
@@ -171,6 +171,6 @@ You could consider converting the Product class to a data class so we get the eq
 
 Continue with exercise-3:
 
-```kotlin
+```
 git checkout exercise-3
 ```
