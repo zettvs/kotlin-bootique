@@ -20,7 +20,8 @@ Data classes can have only 1 primary constructor. Lets merge the two constructor
 
 ```kotlin
 data class OrderItem @JsonCreator constructor(@JsonProperty("productId") val productId: String, 
-                                              @JsonProperty("quantity") val quantity: Int, val price: BigDecimal) {
+                                              @JsonProperty("quantity") val quantity: Int, 
+                                              val price: BigDecimal) {
     val totalPrice: BigDecimal
         get() = price.multiply(BigDecimal(quantity))
 }
@@ -113,7 +114,7 @@ The resulting polished data class looks like:
 
 ```kotlin
 data class OrderItem(val productId: String, val quantity: Int, val price: BigDecimal = BigDecimal.ZERO) {
-    val totalPrice: BigDecimal = price.multiply(BigDecimal(quantity))
+    val totalPrice: BigDecimal = price * quantity
 }
 ```
 
