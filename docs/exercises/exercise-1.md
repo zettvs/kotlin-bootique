@@ -76,7 +76,8 @@ Build the project with maven (./mvnw clean verify).
 You should see an error in the tests. The BootiqueApplicationTests try to bootstrap the Spring Boot application but fails with the following error:
 ```
 org.springframework.beans.factory.parsing.BeanDefinitionParsingException: 
-Configuration problem: @Configuration class 'BootiqueApplication' may not be final. Remove the final modifier to continue.
+Configuration problem: @Configuration class 'BootiqueApplication' may not be final. 
+Remove the final modifier to continue.
 Offending resource: com.bootique.bootique.BootiqueApplication
 ```
 
@@ -92,7 +93,8 @@ Build the project with maven (./mvnw clean verify), is it working?
 
 ```
 org.springframework.beans.factory.parsing.BeanDefinitionParsingException: 
-Configuration problem: @Bean method 'api' must not be private or final; change the method's modifiers to continue
+Configuration problem: @Bean method 'api' must not be private or final; 
+change the method's modifiers to continue
 Offending resource: com.bootique.bootique.BootiqueApplication
 ```
 
