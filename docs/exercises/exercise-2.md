@@ -16,11 +16,9 @@ Open OrderItem.java.
 
 **Exercise**: convert OrderItem.java to Kotlin using IntelliJ (menu > Code > Convert Java File to Kotlin File). 
 
-The outcome of the conversion is far from optimal, we can do way better! Remember Kotlin [data classes](https://kotlinlang.org/docs/reference/data-classes.html)? Let get rid of the boiler-plate and convert the OrderItem class to a data class. Add the data keyword to the class so that it becomes:
+The outcome of the conversion is far from optimal, we can do way better! Remember Kotlin [data classes](https://kotlinlang.org/docs/reference/data-classes.html)? Let get rid of the boiler-plate and convert the OrderItem class to a data class. 
 
-```kotlin
-data class OrderItem
-```
+**Exercise**: convert OrderItem to a data class
 
 With data classes we get the equals, hashCode and toString method for free:
  
