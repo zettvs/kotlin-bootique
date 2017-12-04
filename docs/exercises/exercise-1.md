@@ -30,7 +30,7 @@ Add the necessary Kotlin dependencies, we will use the Java 8+ version of the [k
 
 ### Add the Kotlin maven plugin
 
-Just like with Java, you need to configure a kotlin maven (compiler) plugin for the compilation of Kotlin files. 
+Just like with Java, you need to configure a [kotlin maven (compiler) plugin](https://kotlinlang.org/docs/reference/using-maven.html) for the compilation of Kotlin files. 
 ```xml
 <plugin>
     <artifactId>kotlin-maven-plugin</artifactId>
