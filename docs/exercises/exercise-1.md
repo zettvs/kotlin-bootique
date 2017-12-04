@@ -1,12 +1,12 @@
 ## Exercise 1: prepare your project for Kotlin
 
-In this exercise we will modify the setup an existing Spring Boot Java project to be able to start using Kotlin. 
+In this exercise we will modify the setup of an existing Spring Boot Java project to be able to start using Kotlin. 
 
-This project uses maven for building the application but when using gradle the same concepts and changes apply.
+This project uses maven for building the application but the same concepts apply when using Gradle.
 
 ### Add Kotlin to your maven project
 
-Lets prepare the maven pom.xml for Kotlin. Add a maven property that defines the Kotlin version to the existing properties:
+Prepare the maven pom.xml for Kotlin, add a maven property that defines the Kotlin version to the existing properties:
 ```xml
 <properties>
     ...
@@ -14,7 +14,7 @@ Lets prepare the maven pom.xml for Kotlin. Add a maven property that defines the
 </properties>
 ```
 
-Add the Kotlin dependencies, we will use the Java 8+ version of the stdlib.
+Add the necessary Kotlin dependencies, we will use the Java 8+ version of the [https://kotlinlang.org/api/latest/jvm/stdlib/index.html](kotlin stdlib).
 ```xml
 <dependency>
     <groupId>org.jetbrains.kotlin</groupId>
@@ -30,7 +30,7 @@ Add the Kotlin dependencies, we will use the Java 8+ version of the stdlib.
 
 ### Add the Kotlin maven plugin
 
-Just like Java, you need to configure a compiler plugin for the compilation of Kotlin files. 
+Just like with Java, you need to configure a kotlin maven (compiler) plugin for the compilation of Kotlin files. 
 ```xml
 <plugin>
     <artifactId>kotlin-maven-plugin</artifactId>
@@ -61,15 +61,15 @@ Just like Java, you need to configure a compiler plugin for the compilation of K
     </dependencies>
 </plugin>
 ```
-Your project is now ready for some kotlin code! 
-
-Rebuild the project using maven by executing the following command:
+Your project is now ready for some kotlin code! Rebuild the project using maven by executing the following command:
 
 ```xml
 ./mvnw clean verify
 ```
 
-Now convert the BootiqueApplication.java file to Kotlin. You can do this in IntelliJ via the menu option Code > Convert Java File to Kotlin File.
+### Convert Java to Kotlin
+
+Lets convert some Java code to Kotlin, we will start with the BootiqueApplication.java file. You can try to do this manually but it can easily be done using IntelliJ via the menu option Code > Convert Java File to Kotlin File.
 
 Build the project with maven (./mvnw clean verify).
 
@@ -80,9 +80,9 @@ Configuration problem: @Configuration class 'BootiqueApplication' may not be fin
 Offending resource: com.bootique.bootique.BootiqueApplication
 ```
 
-What happened? In Kotlin all the classes are final by default, this causes an issue when using Spring (Boot). Spring will try to subclass (Proxy) you configuration classes and components, so we need to explicitly mark the class open, so that it can be extended. 
+What happened? In Kotlin all the classes are final by default, this causes an issue when using Spring (Boot). Spring needs to be able to subclass (Proxy) you configuration classes and components. In kotlin we can mark a class open so it can be inherited by other classes. 
 
-This can be done by adding the open keyword to the class definition.
+Add the open keyword to the class definition.
 
 ```kotlin
 open class BootiqueApplication
@@ -102,7 +102,7 @@ This might be fine in our case where there is just one method, but consider an a
 
 We can use a kotlin compiler plugin for spring application to ensure all Spring related classes and methods are defined open by default.
 
-Add the following configuration to the kotlin-maven-plugin (just after <version>${kotlin.version}</version>):
+Add the following configuration to the kotlin-maven-plugin (just after &lt;version&gt;${kotlin.version}&lt;/version&gt;):
 
 ```xml
 <configuration>
@@ -116,6 +116,8 @@ Add the following configuration to the kotlin-maven-plugin (just after <version>
 Build the project with maven (./mvnw clean verify), is it working? Should be fine now! 
 
 You can now also remove the open keyword from the BootiqueApplication class definition if it bothers you.
+
+### Next steps
 
 Continue with exercise-2:
 
