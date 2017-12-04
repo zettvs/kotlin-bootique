@@ -128,10 +128,12 @@ What happened? In Kotlin all the methods are also final by default. Since Spring
 
 While this might be fine in our case with just one method, consider an application with multiple configuration classes and/or bean definitions. We can use an plugin for the Kotlin maven plugin to ensure all Spring related classes and methods are made open by default.
 
-**Exercise**: Add the following configuration to the kotlin-maven-plugin, just after: `<version>${kotlin.version}</version>`
+**Exercise**: Enable the [spring plugin for the kotlin-maven-plugin](https://kotlinlang.org/docs/reference/compiler-plugins.html)
 
 <details>
 <summary>Snippet</summary>
+
+Add the following configuration to the kotlin-maven-plugin, just after: `<version>${kotlin.version}</version>`
 
 ```xml
 ...
