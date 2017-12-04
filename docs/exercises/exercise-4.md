@@ -1,36 +1,36 @@
 ## Exercise 4: Spring 5 Kotlin Bean DSL
 
-Rewrite the BootiqueApplication to use the Spring 5 Kotlin Bean DSL.
+In this exercise we will show a real world example of using a DSL written in Kotlin. We will use the Spring 5 Kotlin bean defintion DSL to rewrite the BootiqueApplication.kt class to this DSL.
 
 ### Kotlin Bean DSL
 
-Spring 5 provides a [Kotlin Beans DSL](https://docs.spring.io/spring/docs/current/spring-framework-reference/languages.html#kotlin-bean-definition-dsl) to define your application configuration in a functional way.
+Spring 5 provides a [Kotlin Beans definition DSL](https://docs.spring.io/spring/docs/current/spring-framework-reference/languages.html#kotlin-bean-definition-dsl) to define your application configuration in a functional way.
 
-Lets introduce a function that defines are beans in a functional way.
+We will add this to our existing Spring Boot application. In this exercise the goal is to make the SpringBootApplication class more concise. Later you can decide whether you like it or not :-)
 
-**Exercise**: remove the curly braces from the class.
+**Exercise**: remove the curly braces from the BootiqueApplication class.
 
-Below is an example of a Kotlin function that defines the BeanDefinitionDsl.
-
+We can define the DSL using a Kotlin function in the BootiqueApplication. Below is an example of a Kotlin function that defines the BeanDefinitionDsl.
+                                                                          
 ```kotlin
 fun beans(): BeanDefinitionDsl = beans {
-    ...bean definitions here
+    bean<T> { 
+        ...instantiation
+    }
 }
 ```
 
-**Exercise**: add the beans function in the BootiqueApplication.kt file.
+**Exercise**: add the beans() function in the BootiqueApplication.kt file.
 
-Configure the existing @Beans in the Kotlin Bean DSL/
+Configure the existing `@Bean fun api(): Docket` in the Kotlin bean definition DSL.
 
 **Exercise**: add the Docket bean inside the beans function.
 
-Cleanup the old @Bean method.
+We don`t need the old @Bean function anymore.
 
-**Exercise**: remove the @Bean fun api() function.
+**Exercise**: remove the `@Bean fun api(): Docket` function.
 
-We need to provide the Spring Boot application with the BeanDefinitionDsl.
-
-**Exercise**:Replace the existing main, including companion object by:
+We need to configure the SpringApplication runner with the BeanDefinitionDsl. Spring Boot 2 has some Kotlin extensions to do just that:
 
 ```kotlin
 fun main(args: Array<String>) {
@@ -39,6 +39,8 @@ fun main(args: Array<String>) {
     }
 }
 ```
+
+**Exercise**: Replace the existing main, including companion object.
 
 We should now have a file with a Kotlin class with only two annotations defined on the class. And besides that it contains two functions, beans() and main().
 
@@ -111,3 +113,11 @@ fun main(args: Array<String>) {
 }
 ```
 </section>
+
+### Next steps
+
+Your are almost there, continue with the last exercise, exercise-5:
+
+```
+git checkout exercise-5
+```
