@@ -66,18 +66,18 @@ data class OrderItem @JsonCreator constructor(@JsonProperty("productId") val pro
 
 A better approach would be to avoid having to deal with null values. This way we do not have to worry about potential NPEs. We can do this by providing a default value for the price, BigDecimal.ZERO was used in the Java version, we will use that here as well. 
 
-In case you are wondering where the real price is calculated, take a look at the BootiqueController.addToBasket().
+In case you are wondering where the price value is being provided then have a look at the BootiqueController.addToBasket().
 
 ```kotlin
 data class OrderItem @JsonCreator constructor(@JsonProperty("productId") val productId: String, 
                                               @JsonProperty("quantity") val quantity: Int, 
                                               val price: BigDecimal = BigDecimal.ZERO) {
     val totalPrice: BigDecimal
-        get() = price.multiply(BigDecimal(quantity))
+        get() = price.multiply(BigDecimal(quantity)) // evaluated every time we access the totalPrice property or call getTotalPrice() from Java.
 }
 ```
 
-We can improve the readability of the totalPrice calculation. Would it not be nice being able to write it like:
+Since we made the constructor arguments val, so immutable, we can also write totalPrice as an expression. Would it not be nice being able to write it like:
 
 ```kotlin
 val totalPrice: BigDecimal = price * quantity
@@ -114,7 +114,7 @@ The resulting polished data class looks like:
 
 ```kotlin
 data class OrderItem(val productId: String, val quantity: Int, val price: BigDecimal = BigDecimal.ZERO) {
-    val totalPrice: BigDecimal = price * quantity
+    val totalPrice = price * quantity // evaluated only once!
 }
 
 public operator inline fun java.math.BigDecimal.times(other: Int): java.math.BigDecimal
