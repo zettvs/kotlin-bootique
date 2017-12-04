@@ -1,6 +1,6 @@
 ## Exercise 2: convert more code to Kotlin
 
-In this exercise we will convert the Product and OrderItem classes to Kotlin, our goal is to make it a bit more concise.
+In this exercise we will convert the Product and OrderItem classes to Kotlin, our goal is to make it more concise.
 
 ### Convert Product.java to Kotlin
 
@@ -8,7 +8,7 @@ Open Product.java and convert the file using IntelliJ (menu > Code > Convert Jav
 
 ### Convert OrderItem.java to Kotlin
 
-Open OrderItem.java and convert the file using IntelliJ (menu > Code > Convert Java File to Kotlin File). The outcome of the conversion is far from optimal, we can do way better. Remember data classes? Let get rid of the boiler-plate and convert the OrderItem class to a data class. Add the data keyword to the class so that it becomes:
+Open OrderItem.java and convert the file using IntelliJ (menu > Code > Convert Java File to Kotlin File). The outcome of the conversion is far from optimal, we can do way better. Remember Kotlin [data classes](https://kotlinlang.org/docs/reference/data-classes.html)? Let get rid of the boiler-plate and convert the OrderItem class to a data class. Add the data keyword to the class so that it becomes:
 
 ```kotlin
 data class OrderItem
@@ -16,10 +16,11 @@ data class OrderItem
 
 Since it is a data class we can delete the equals, hashCode and toString methods, we get that for free with data classes. 
 
-Data classes can have only 1 primary constructor. Lets cleanup that mess a bit and merge the two constructors. The result should look like:
+Data classes can have only 1 primary constructor. Lets merge the two constructors. The result should look like:
 
 ```kotlin
-data class OrderItem @JsonCreator constructor(@JsonProperty("productId") val productId: String, @JsonProperty("quantity") val quantity: Int, val price: BigDecimal) {
+data class OrderItem @JsonCreator constructor(@JsonProperty("productId") val productId: String, 
+                                              @JsonProperty("quantity") val quantity: Int, val price: BigDecimal) {
     val totalPrice: BigDecimal
         get() = price.multiply(BigDecimal(quantity))
 }
@@ -39,8 +40,11 @@ We should see an exception in the application logs:
 
 ```
 Failed to read HTTP message: org.springframework.http.converter.HttpMessageNotReadableException: 
-JSON parse error: Instantiation of [simple type, class com.bootique.bootique.OrderItem] value failed for JSON property price due to missing (therefore NULL) value for creator parameter price which is a non-nullable type; 
-nested exception is com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException: Instantiation of [simple type, class com.bootique.bootique.OrderItem] value failed for JSON property price due to missing (therefore NULL) value for creator parameter price which is a non-nullable type
+JSON parse error: Instantiation of [simple type, class com.bootique.bootique.OrderItem] value failed 
+for JSON property price due to missing (therefore NULL) value for creator parameter price which is a non-nullable type; 
+nested exception is com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException: 
+Instantiation of [simple type, class com.bootique.bootique.OrderItem] value failed 
+for JSON property price due to missing (therefore NULL) value for creator parameter price which is a non-nullable type
 at [Source: (PushbackInputStream); line: 1, column: 30] (through reference chain: com.bootique.bootique.OrderItem["price"])
 ```
 
@@ -51,16 +55,20 @@ How can we fix this? First lets try to make the price field nullable (add ? afte
 The code should now look like:
 
 ```kotlin
-data class OrderItem @JsonCreator constructor(@JsonProperty("productId") val productId: String, @JsonProperty("quantity") val quantity: Int, val price: BigDecimal?) {
-    val totalPrice: BigDecimal?
-        get() = price?.multiply(BigDecimal(quantity))
+data class OrderItem @JsonCreator constructor(@JsonProperty("productId") val productId: String, 
+                                              @JsonProperty("quantity") val quantity: Int, 
+                                              val price: BigDecimal = BigDecimal.ZERO) {
+    val totalPrice: BigDecimal
+        get() = price.multiply(BigDecimal(quantity))
 }
 ```
 
 A better approach would be to avoid having to deal with null values. This way we do not have to worry about potential NPEs. We can do this by providing a default value for the price, 0 seems reasonable here. In case you are wondering where the real price is calculated, take a look at the BootiqueController.addToBasket().
 
 ```kotlin
-data class OrderItem @JsonCreator constructor(@JsonProperty("productId") val productId: String, @JsonProperty("quantity") val quantity: Int, val price: BigDecimal = BigDecimal.ZERO) {
+data class OrderItem @JsonCreator constructor(@JsonProperty("productId") val productId: String, 
+                                              @JsonProperty("quantity") val quantity: Int, 
+                                              val price: BigDecimal = BigDecimal.ZERO) {
     val totalPrice: BigDecimal
         get() = price.multiply(BigDecimal(quantity))
 }
