@@ -169,7 +169,7 @@ public operator inline fun java.math.BigDecimal.times(other: Int): java.math.Big
 
 You could consider converting the Product class to a data class so we get the equals, hashCode and toString for free.
 
-**Exercise**: Continue with exercise-3:
+Continue with exercise-3:
 
 ```kotlin
 git checkout exercise-3
