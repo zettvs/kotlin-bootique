@@ -13,18 +13,16 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2
 @EnableSwagger2
 class BootiqueApplication
 
-fun beans() = beans {
-    bean {
-        Docket(DocumentationType.SWAGGER_2)
-                .select()
-                .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.any())
-                .build()
-    }
-}
-
 fun main(args: Array<String>) {
     runApplication<BootiqueApplication>(*args) {
-        addInitializers(beans())
+        beans {
+            bean<Docket> {
+                Docket(DocumentationType.SWAGGER_2)
+                        .select()
+                        .apis(RequestHandlerSelectors.any())
+                        .paths(PathSelectors.any())
+                        .build()
+            }
+        }
     }
 }
