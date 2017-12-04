@@ -57,13 +57,15 @@ The code should now look like:
 ```kotlin
 data class OrderItem @JsonCreator constructor(@JsonProperty("productId") val productId: String, 
                                               @JsonProperty("quantity") val quantity: Int, 
-                                              val price: BigDecimal = BigDecimal.ZERO) {
-    val totalPrice: BigDecimal
-        get() = price.multiply(BigDecimal(quantity))
+                                              val price: BigDecimal?) {
+    val totalPrice: BigDecimal?
+        get() = price?.multiply(BigDecimal(quantity))
 }
 ```
 
-A better approach would be to avoid having to deal with null values. This way we do not have to worry about potential NPEs. We can do this by providing a default value for the price, 0 seems reasonable here. In case you are wondering where the real price is calculated, take a look at the BootiqueController.addToBasket().
+A better approach would be to avoid having to deal with null values. This way we do not have to worry about potential NPEs. We can do this by providing a default value for the price, BigDecimal.ZERO was used in the Java version, we will use that here as well. 
+
+In case you are wondering where the real price is calculated, take a look at the BootiqueController.addToBasket().
 
 ```kotlin
 data class OrderItem @JsonCreator constructor(@JsonProperty("productId") val productId: String, 
@@ -74,27 +76,42 @@ data class OrderItem @JsonCreator constructor(@JsonProperty("productId") val pro
 }
 ```
 
-### Polishing the code
-
-The JSON (de)serialization in this application is handled using the Jackson library. In the spring-boot-starter-web dependency, which is defined in the maven pom.xml, the Jackson kotlin module is also being pulled in. By using the Jackson kotlin module we can cleanup the Jackson annotations a bit. The polished version of our data class would look like this:
+We can improve the readability of the totalPrice calculation. Would it not be nice being able to write it like:
 
 ```kotlin
-data class OrderItem(val productId: String, val quantity: Int, val price: BigDecimal = BigDecimal.ZERO) {
-    val totalPrice: BigDecimal = price.multiply(BigDecimal(quantity))
-}
+val totalPrice: BigDecimal = price * quantity
 ```
-We can also drop the constructor keyword since there is only one constructor here _**and**_ because do not have any annotation on the constructor left.
 
-There is one optimization left, we can improve the readability of the totalPrice calculation. Would it not be nice being able to write it like:
+The Kotlin stdlib includes overloaded operators for Java types like BigDecimal. This allows use to write the above statement like:
 
 ```kotlin
 val totalPrice: BigDecimal = price * BigDecimal(quantity)
 ```
 
-Since Kotlin 1.2 the Kotlin stdlib includes an overloaded times operator for BigDecimal. So we can write it in the syntax as shown above.
+Write your own 
 
 ```kotlin
 public operator inline fun java.math.BigDecimal.times(other: java.math.BigDecimal): java.math.BigDecimal
+```
+
+### Polishing the code
+
+This application communicates over HTTP using JSON, as you have seen in Swagger or in the curl command in the introduction.md. The JSON (de)serialization in this application is handled by the Jackson library, the spring-boot-starter-web dependency pulls in all these Jackson dependencies for us.
+
+In the BasketController the JSON data is mapped from the POST data directly on the OrderItem class. As you can see, in the OrderItem class we are instructing the Jackson library, with the @JsonCreator and @JsonProperty, how to map the JSON data to our Java (or Kotlin) class. 
+
+Reason for having the @JsonProperty annotation is that when compiling Java code, the parameter names of the constructor parameters are lost, so Jackson does not know how to map the json properties to the OrderItem class. In Kotlin, constructor parameter names are preserved when compiling code. We can therefore get rid of the @JsonProperty annotations. 
+
+As a bonus feature, the Jackson library also allows us to omit the @JsonCreator annotation when using Kotlin (these features are provided by the jackson kotlin module).
+
+We can also drop the constructor keyword since there is only one constructor here _**and**_ because do not need/have any annotation on the constructor left.
+
+The resulting polished data class looks like:
+
+```kotlin
+data class OrderItem(val productId: String, val quantity: Int, val price: BigDecimal = BigDecimal.ZERO) {
+    val totalPrice: BigDecimal = price.multiply(BigDecimal(quantity))
+}
 ```
 
 ### Done?
