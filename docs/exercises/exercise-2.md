@@ -24,7 +24,7 @@ Data classes can have only 1 primary constructor:
 
 <details>
   <summary>The resulting code should look like this:</summary>
-  
+  <p>
 ```kotlin
 data class OrderItem @JsonCreator constructor(@JsonProperty("productId") val productId: String, 
                                               @JsonProperty("quantity") val quantity: Int, 
@@ -33,6 +33,7 @@ data class OrderItem @JsonCreator constructor(@JsonProperty("productId") val pro
         get() = price.multiply(BigDecimal(quantity))
 }
 ```
+  </p>
 </details>
 
 In case you are wondering where the price value is being provided, then have a look at the BootiqueController.addToBasket().
