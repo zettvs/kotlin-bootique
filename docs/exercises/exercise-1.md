@@ -100,9 +100,7 @@ Offending resource: com.bootique.bootique.BootiqueApplication
 
 What happened? In Kotlin all the methods are also final by default. Since Spring wants to proxy the methods you need to declare them open as well.
 
-This might be fine in our case where there is just one method, but consider an application with multiple configuration classes and/or bean definitions.
-
-We can use a kotlin compiler plugin for spring application to ensure all Spring related classes and methods are defined open by default.
+While this might be fine in our case with just one method, consider an application with multiple configuration classes and/or bean definitions. We can use an plugin for the Kotlin maven plugin to ensure all Spring related classes and methods are made open by default.
 
 Add the following configuration to the kotlin-maven-plugin, just after: _&lt;version&gt;${kotlin.version}&lt;/version&gt;_
 
@@ -119,9 +117,9 @@ Add the following configuration to the kotlin-maven-plugin, just after: _&lt;ver
 ...
 ```
 
-Build the project with maven (./mvnw clean verify), is it working? Should be fine now! 
+Build the project with maven (./mvnw clean verify), is it working now? 
 
-You can now also remove the open keyword from the BootiqueApplication class definition if it bothers you.
+You can now also remove the _open_ keyword from the BootiqueApplication class definition if it really bothers you.
 
 ### Next steps
 
