@@ -57,7 +57,7 @@ fun <T> Iterable<T>.sumBy(selector: (T) -> BigDecimal): BigDecimal {
 <br>
 ### Property syntax vs functions
 
-Kotlin encourages you to use the [property syntax](https://kotlinlang.org/docs/reference/properties.html) whenever possible. In some situations you could also use a function to achieve similar results.
+Kotlin encourages you to use the [property syntax](https://kotlinlang.org/docs/reference/properties.html) whenever possible. In some situations you could also prefer/use a function to achieve similar results.
 
 **Exercise**: rewrite the totalPrice calculation as a function expression.
 
@@ -93,11 +93,60 @@ fun getBasketById(id: String): Basket = baskets.getOrPut(id) { Basket() }
 </details>
 <br>
 
+Note that the `baskets: ConcurrentHashMap` is wrapped in a `companion object { }`.
+
 ```kotlin
 companion object {
     private val baskets = ConcurrentHashMap<String, Basket>()
 }
 ```
+
+The original Java code defined baskets as static, Kotlin does not support the static keyword. You can use (companion) objects instead.
+
+### Convert ProductRepository.java to Kotlin
+
+Open ProductRepository.java
+
+**Exercise**: convert ProductRepository.java to Kotlin using IntelliJ (menu > Code > Convert Java File to Kotlin File). 
+
+You will notice that getProductById() is broken. This is because the expected return type is non-nullable. While the implementation might return a null value when the product cannot be found.
+
+**Exercise**: change the return type of `fun getProductById()` that it allows for a returning nullable Product.
+
+<details>
+<summary>The resulting code should look like this:</summary>
+
+```kotlin
+fun getProductById(productId: String): Product? {
+    return products[productId]
+}
+```
+</details>
+<br>
+
+**Exercise**: write the function `fun getProductById()` as an expression function.
+
+<details>
+<summary>The resulting code should look like this:</summary>
+
+```kotlin
+fun getProductById(productId: String) = products[productId]
+```
+</details>
+<br>
+
+The implementation of `fun getProducts(): List<Product>` was translated from Java, but we can improve this the Kotlin way. The goal is to return an immutable List of Products. In Kotlin we can return the products.values and convert that to a List. Which is immutable by default.
+
+**Exercise**: return products.values as a Kotlin (immutable) List from `fun getProducts(): List<Product>`
+
+<details>
+<summary>The resulting code should look like this:</summary>
+
+```kotlin
+fun getProducts() = products.values.toList()
+```
+</details>
+<br>
 
 ### Convert BootiqueController.java to Kotlin
 
@@ -105,16 +154,40 @@ Open BootiqueController.java
 
 **Exercise**: convert BootiqueController.java to Kotlin using IntelliJ (menu > Code > Convert Java File to Kotlin File). 
 
-addToBasket
+The resulting code looks pretty ok.
+
+**Exercise**: Rewrite the functions to expression functions when possible.
+
+The addToBasket() function can still be improved. What if we are not able to find the product for the given productId?
+
+The converted code will throw a Kotlin NullPointException because of the !! in `productById!!.listPrice`.
+
+The fix would be to properly check if we got result from `productRepository.getProductById(orderItem.productId)`.
+
+**Exercise**: Add a null check for non existing products and throw an IllegalArgumentException if not found.
+
+<details>
+<summary>The resulting code should look like this:</summary>
 
 ```kotlin
-val (_, _, _, listPrice) = productRepository.getProductById(orderItem.productId)
+    @PostMapping(path = ["/baskets/{id}/items"], consumes = [MediaType.APPLICATION_JSON_UTF8_VALUE])
+    fun addToBasket(@PathVariable id: String, @RequestBody orderItem: OrderItem): Basket {
+        return basketRepository.getBasketById(id).apply {
+            val product = productRepository.getProductById(orderItem.productId)
+                    ?: throw IllegalArgumentException("Product with productId: ${orderItem.productId} not found!")
+            addOrderItem(OrderItem(orderItem.productId, orderItem.quantity, product.listPrice))
+        }
+    }
 ```
+</details>
+<br>
 
-replace
+Test if your application is still working as expected.
 
-### Convert ProductRepository.java to Kotlin
+### Next steps
 
-Open ProductRepository.java
+You have now successfully converted all of the Java code to Kotlin! Continue with exercise-4:
 
-**Exercise**: convert ProductRepository.java to Kotlin using IntelliJ (menu > Code > Convert Java File to Kotlin File). 
+```
+git checkout exercise-4
+```
