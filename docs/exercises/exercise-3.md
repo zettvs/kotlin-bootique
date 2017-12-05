@@ -55,6 +55,7 @@ fun <T> Iterable<T>.sumBy(selector: (T) -> BigDecimal): BigDecimal {
 ```
 </details>
 <br>
+
 ### Property syntax vs functions
 
 Kotlin encourages you to use the [property syntax](https://kotlinlang.org/docs/reference/properties.html) whenever possible. In some situations you could also prefer/use a function to achieve similar results.
