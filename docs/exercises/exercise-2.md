@@ -90,7 +90,7 @@ data class OrderItem @JsonCreator constructor(@JsonProperty("productId") val pro
 
 A better approach would be to avoid having to deal with null values, this way we do not have to worry about potential NPEs. We can do this by providing a default value for the price, in the Java version price was assigned the value of BigDecimal.ZERO, use that here as well. 
 
-**Exercise**: assign the default value to the price parameter, restart the application and try to run the same curl command as before.
+**Exercise**: assign the default value to the price property, restart the application and try to run the same curl command as before.
 
 <details>
   <summary>Example with a default value for price:</summary>
@@ -144,7 +144,7 @@ public operator inline fun java.math.BigDecimal.times(other: Int): java.math.Big
 ```
 </details>
 <br>
-It is a good practise to group these type of (language) extensions in a separate, easily recognizable, so it can be shared or reused in other parts of the code.
+It is a good practise to group these type of (language) extensions in a separate, easily recognizable, file so it can be shared or reused in other parts of the code.
 
 ### Polishing the code
 
