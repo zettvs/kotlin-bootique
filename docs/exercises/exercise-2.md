@@ -169,6 +169,8 @@ data class OrderItem(val productId: String, val quantity: Int, val price: BigDec
 
 You could consider converting the Product class to a data class so we get the equals, hashCode and toString for free.
 
+### Next steps
+
 Continue with exercise-3:
 
 ```
