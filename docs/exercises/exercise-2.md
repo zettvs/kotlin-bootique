@@ -24,9 +24,11 @@ With data classes we get the equals, hashCode and toString method for free:
  
 **Exercise**: delete the equals, hashCode and toString methods.
 
-Data classes can have only 1 primary constructor:
+In the converted code we ended up with a [constructor](https://kotlinlang.org/docs/reference/classes.html#constructors) on class level called the primary constructor, and an overloaded version inside the class called the secondary constructor.
+
+In many situations we can get rid of overloaded constructors by merging the two [constructors](https://kotlinlang.org/docs/reference/classes.html#constructors) into a single primary constructor.
  
-**Exercise**: merge the two constructors into a single (primary) constructor.
+**Exercise**: merge the two constructors but *keep* the @JsonCreator and @JsonProperty annotation.
 
 <details>
   <summary>The resulting code should look like this:</summary>
@@ -41,7 +43,8 @@ data class OrderItem @JsonCreator constructor(@JsonProperty("productId") val pro
 ```
 </details>
 <br>
-In case you are wondering where the price value is being provided, then have a look at the BootiqueController.addToBasket().
+
+_In case you are wondering where the price value is being provided, then have a look at the `BootiqueController.addToBasket()`_
 
 #### Verify the changes
 
@@ -67,7 +70,7 @@ for JSON property price due to missing (therefore NULL) value for creator parame
 at [Source: (PushbackInputStream); line: 1, column: 30] (through reference chain: com.bootique.bootique.OrderItem["price"])
 ```
 
-We broke the application :-( Remember we merged the two constructors? In the POST body we send only two fields `{"productId":"1","quantity":2}` for an OrderItem, this used to work when there were two constructors. After the merge we ended up with a single constructor which requires 3 non-nullable (mandatory) parameters. 
+We broke the application :-( Remember we merged the two constructors? In the POST body we send only two fields `{"productId":"1","quantity":2}` for an OrderItem, this used to work when there were overloaded constructors. After the merge we ended up with a single constructor which requires 3 non-nullable (mandatory) parameters. 
 
 How can we fix this with Kotlin? First try to make the price field nullable and add the ? after the BigDecimal type. You will probable notice that the totalPrice calculation is now also giving you a hard time. Price can now be nullable therefore you need to add null checks in the totalPrice calculation.
 
@@ -103,13 +106,19 @@ data class OrderItem @JsonCreator constructor(@JsonProperty("productId") val pro
 </details>
 <br>
 
-In the code snippet above the constructor arguments are val, immutable, which means after assignment the value cannot be changed. Therefore we can also write the totalPrice assignment as an expression. Would it not be nice if we could write it like:
+In the code snippet above the constructor arguments are val, immutable, which means after assignment the value cannot be changed. totalPrice is calculated based in this immutable properties, because of this we can also write the totalPrice assignment as an expression. Would it not be nice if we could write it like:
 
 ```kotlin
 val totalPrice: BigDecimal = price * quantity
 ```
 
-This can be achieved by using [operator overloading](https://kotlinlang.org/docs/reference/operator-overloading.html) in Kotlin. The Kotlin stdlib includes [overloaded operators](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/java.math.-big-decimal/index.html) for Java types like java.math.BigDecimal. This allows use to write the above statement like:
+Or without the explicit type, the type inference provided by Kotlin can help you here:
+
+```kotlin
+val totalPrice = price * quantity
+```
+
+This syntax can be achieved by using [operator overloading](https://kotlinlang.org/docs/reference/operator-overloading.html). The Kotlin stdlib includes [overloaded operators](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/java.math.-big-decimal/index.html) for Java types like java.math.BigDecimal. This allows use to write the above statement like:
 
 ```kotlin
 val totalPrice: BigDecimal = price * BigDecimal(quantity)
@@ -123,7 +132,7 @@ This is not yet how we want to write the expression because we still have to wra
 public operator inline fun java.math.BigDecimal.times(other: java.math.BigDecimal): java.math.BigDecimal
 ```
 
-As you probably know  `price.times(BigDecimal(quantity))` is the same as `price * BigDecimal(quantity)`. We want to be able to invoke the times function with a Int argument so that we do not need to wrap it in a BigDecimal. Therefore we need to implement our own overloaded operator, simular to the one in the Koltin stdlib. 
+As you might have noticed `price.times(BigDecimal(quantity))` is the same as `price * BigDecimal(quantity)`, this is just syntactic sugar. We want to be able to invoke the times function with a Int argument so that we do not need to wrap it in a BigDecimal. Therefore we need to implement our own overloaded operator, similar to the one in the Koltin stdlib. 
 
 **Exercise**: write an operator for java.math.BigDecimal that accepts an Int.
 
@@ -135,11 +144,11 @@ public operator inline fun java.math.BigDecimal.times(other: Int): java.math.Big
 ```
 </details>
 <br>
-It is a good practise to group these type of (language) extensions in a file so can be easily recognized and reused in other parts of the code.
+It is a good practise to group these type of (language) extensions in a separate, easily recognizable, so it can be shared or reused in other parts of the code.
 
 ### Polishing the code
 
-This application communicates over HTTP using JSON, as you have seen in Swagger or in the curl command in the introduction.md. The JSON (de)serialization in this application is handled by the Jackson library, the spring-boot-starter-web dependency pulls in all these Jackson dependencies for us.
+This application communicates over HTTP using JSON, as you have seen in Swagger or in the curl command in the introduction.md. The JSON (de)serialization in this application is handled by the Jackson library, the spring-boot-starter-web (Spring Boot 2!) dependency pulls in all these Jackson dependencies for us.
 
 In the BasketController the JSON data is mapped from the POST data directly on the OrderItem class. As you can see, in the OrderItem class we are instructing the Jackson library, with the @JsonCreator and @JsonProperty, how to map the JSON data to our Java (or Kotlin) class. 
 
@@ -147,9 +156,9 @@ Reason for having the @JsonProperty annotation is that when compiling Java code,
 
 As a bonus feature, the Jackson library also allows us to omit the @JsonCreator annotation when using Kotlin (these features are provided by the jackson kotlin module).
 
-We can also drop the constructor keyword since there is only one constructor here _**and**_ because do not need/have any annotation on the constructor left.
+We can omit the constructor keyword as well when there are no annotation needed for the constructor declaration.
 
-**Exercise**: cleanup the code by removing the Jackson annotations
+**Exercise**: cleanup the code by removing the Jackson annotations and constructor keyword.
 
 <details>
   <summary>The resulting polished data class looks like:</summary>
@@ -171,7 +180,7 @@ You could consider converting the Product class to a data class so we get the eq
 
 ### Next steps
 
-Continue with exercise-3:
+Continue with [exercise-3](exercise-3.md):
 
 ```
 git checkout exercise-3
