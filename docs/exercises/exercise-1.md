@@ -156,8 +156,9 @@ Build the project with maven (./mvnw clean verify), is it working now?
 
 ### Next steps
 
-Continue with exercise-2:
+Continue with [exercise-2](exercise-2.md):
 
 ```
 git checkout exercise-2
 ```
+
