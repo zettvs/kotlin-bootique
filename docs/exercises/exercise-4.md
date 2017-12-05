@@ -60,7 +60,7 @@ fun main(args: Array<String>) {
 
 **Exercise**: Replace the existing main (including companion object) by this Spring Boot extension.
 
-Right now you should have a `BootiqueApplication.kt` file with a Kotlin class definition and two functions: beans() and main().
+Right now you should have a `BootiqueApplication.kt` file with only a Kotlin class definition and two functions: beans() and main().
 
 <details>
 <summary>The resulting code should look like this:</summary>
