@@ -58,9 +58,9 @@ fun <T> Iterable<T>.sumBy(selector: (T) -> BigDecimal): BigDecimal {
 
 ### Property syntax vs functions
 
-Kotlin encourages you to use the [property syntax](https://kotlinlang.org/docs/reference/properties.html) whenever possible. In some situations you could also prefer/use a function to achieve similar results.
+Kotlin encourages you to use the [property syntax](https://kotlinlang.org/docs/reference/properties.html) whenever possible. In some situations you could also prefer/use a [expression function](https://kotlinlang.org/docs/reference/functions.html#single-expression-functions) to achieve similar results.
 
-**Exercise**: rewrite the totalPrice calculation as a function expression.
+**Exercise**: rewrite the totalPrice calculation as a single expression function.
 
 <details>
   <summary>The resulting code should look like this:</summary>
@@ -125,7 +125,7 @@ fun getProductById(productId: String): Product? {
 </details>
 <br>
 
-**Exercise**: write the function `fun getProductById()` as an expression function.
+**Exercise**: rewrite the function `fun getProductById()` as an single expression function.
 
 <details>
 <summary>The resulting code should look like this:</summary>
@@ -157,7 +157,7 @@ Open BootiqueController.java
 
 The resulting code looks pretty ok.
 
-**Exercise**: Rewrite the functions to expression functions when possible.
+**Exercise**: Rewrite the functions to single expression functions if possible.
 
 The addToBasket() function can still be improved. What if we are not able to find the product for the given productId?
 
