@@ -159,11 +159,7 @@ The resulting code looks pretty ok.
 
 **Exercise**: Rewrite the functions to single expression functions if possible.
 
-The addToBasket() function can still be improved. What if we are not able to find the product for the given productId?
-
-The converted code will throw a Kotlin NullPointException because of the !! in `productById!!.listPrice`.
-
-The fix would be to properly check if we got result from `productRepository.getProductById(orderItem.productId)`.
+The addToBasket() function can still be improved. What if we are not able to find the product for the given productId? The converted code will throw a Kotlin NullPointException because of the !! in `productById!!.listPrice`. A potential fix would be to properly check if we got result from `productRepository.getProductById(orderItem.productId)`.
 
 **Exercise**: Add a null check for non existing products and throw an IllegalArgumentException if not found.
 
