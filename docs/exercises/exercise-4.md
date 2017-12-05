@@ -20,31 +20,47 @@ fun beans(): BeanDefinitionDsl = beans {
 }
 ```
 
+Let migrate the existing Spring configuration to the Kotlin beans definition DSL
+
 **Exercise**: add the beans() function in the BootiqueApplication.kt file.
 
-Configure the existing `@Bean fun api(): Docket` in the Kotlin bean definition DSL.
+Now we included the BeanDefinitionDsl we can migrate the existing bean definition.
 
-**Exercise**: add the Docket bean inside the beans function.
+**Exercise**: add the `@Bean fun api(): Docket` to the beans DSL and remove the `@Bean fun api(): Docket` function.
 
-We don`t need the old @Bean function anymore.
+You are now done!
 
-**Exercise**: remove the `@Bean fun api(): Docket` function.
+<details>
+<summary>The resulting code should look like this:</summary>
+
+```kotlin
+fun beans() = beans {
+    bean<Docket> {
+        Docket(DocumentationType.SWAGGER_2)
+                .select()
+                .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.any())
+                .build()
+    }
+}
+```
+</details>
 
 ### Spring Boot 2 and the Kotlin bean definition DSL
 
-We need to configure the SpringApplication runner with the BeanDefinitionDsl. Spring Boot 2 has some Kotlin extensions to do just that:
+We need to configure the SpringApplication runner to start using the BeanDefinitionDsl. Spring Boot 2 provides some Kotlin extensions to do just that:
 
 ```kotlin
 fun main(args: Array<String>) {
     runApplication<BootiqueApplication>(*args) {
-        addInitializers(beans())
+        addInitializers(...add beans defintion dsl here...)
     }
 }
 ```
 
-**Exercise**: Replace the existing main (including companion object) by this example.
+**Exercise**: Replace the existing main (including companion object) by this Spring Boot extension.
 
-We should now have a file with a Kotlin class with only two annotations defined on the class. And besides that it contains two functions, beans() and main().
+Right now you should have a `BootiqueApplication.kt` file with a Kotlin class definition and two functions: beans() and main().
 
 <details>
 <summary>The resulting code should look like this:</summary>
@@ -82,7 +98,7 @@ fun main(args: Array<String>) {
 </details>
 <br>
 
-We could even simplify the code even further by in-lining the beans() function inside runApplication.
+We could simplify this code even further by in-lining the beans() function inside runApplication.
 
 **Exercise**: move  `beans { ... }` inside of the `runApplication { ... }` block
 
@@ -115,10 +131,13 @@ fun main(args: Array<String>) {
 }
 ```
 </details>
+<br>
 
 ### Next steps
 
-Your are almost there, continue with the last exercise, exercise-5:
+Your are almost there!
+ 
+Continue with [exercise-5](exercise-5.md):
 
 ```
 git checkout exercise-5
