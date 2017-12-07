@@ -28,7 +28,7 @@ In the converted code we ended up with a [constructor](https://kotlinlang.org/do
 
 In many situations we can get rid of overloaded constructors by merging the two [constructors](https://kotlinlang.org/docs/reference/classes.html#constructors) into a single primary constructor.
  
-**Exercise**: merge the two constructors but *keep* the @JsonCreator and @JsonProperty annotation.
+**Exercise**: merge the two constructors but *keep* the @JsonCreator and @JsonProperty annotation. For productId there are two variants, use the non-nullable `val productId: String` which is saver.
 
 <details>
   <summary>The resulting code should look like this:</summary>
@@ -140,7 +140,7 @@ As you might have noticed `price.times(BigDecimal(quantity))` is the same as `pr
   <summary>The resulting code should look like this:</summary>
   
 ```kotlin
-public operator inline fun java.math.BigDecimal.times(other: Int): java.math.BigDecimal
+operator fun BigDecimal.times(quantity: Int) = this.times(BigDecimal(quantity))
 ```
 </details>
 <br>
