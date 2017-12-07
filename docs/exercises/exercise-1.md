@@ -45,7 +45,7 @@ Prepare the maven pom.xml for Kotlin.
 
 Just like with Java, you need to configure a [kotlin maven (compiler) plugin](https://kotlinlang.org/docs/reference/using-maven.html) for the compilation of Kotlin files. 
 
-**Exercise**: Add the kotlin-maven-plugin to the pom.xml.
+**Exercise**: Add the kotlin-maven-plugin to the pom.xml using the snippet below!
 
 <details>
 <summary>Snippet</summary>
